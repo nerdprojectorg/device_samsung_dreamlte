@@ -92,9 +92,10 @@ TARGET_KERNEL_CONFIG := exynos8895-dreamlte_defconfig
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_CLANG_VERSION := clang-proton
 TARGET_KERNEL_CLANG_PATH := $(shell pwd)/prebuilts/clang/host/linux-x86/$(TARGET_KERNEL_CLANG_VERSION)
-
-# Kernel config
 TARGET_KERNEL_SOURCE := kernel/samsung/universal8895
+
+# Allow LZ4 compression
+BOARD_RAMDISK_USE_LZ4 := true
 
 # Use these flags if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
