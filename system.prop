@@ -24,6 +24,10 @@ persist.vendor.qti.inputopts.enable=true \
 persist.vendor.qti.inputopts.movetouchslop=0.6 \
 ro.qcom.adreno.qgl.ShaderStorageImageExtendedFormats=0
 
+# HWUI
+debug.hwui.use_hint_manager=true
+debug.hwui.target_cpu_time_percent=30
+
 # LMKD
 ro.lmk.log_stats=true
 ro.lmk.use_minfree_levels=true
