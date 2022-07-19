@@ -41,6 +41,9 @@ ro.frp.pst=/dev/block/persistent
 # Dalvik dex2oat
 dalvik.vm.dex2oat64.enabled=true
 
+# Pre-Rendering
+ro.vendor.perf.scroll_opt=true
+
 # Wifi
 wifi.direct.interface=p2p-dev-wlan0
 persist.debug.wfd.enable=1
