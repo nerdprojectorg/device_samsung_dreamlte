@@ -28,6 +28,9 @@ ro.lmk.use_psi=false
 ro.arch=exynos8895
 ro.hardware.keystore=mdfpp
 
+# IORap
+ro.iorapd.enable=false
+
 # Media
 debug.stagefright.ccodec=0
 ro.config.systemaudiodebug=abox&codecdsp
