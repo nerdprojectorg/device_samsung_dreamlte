@@ -164,6 +164,7 @@ include device/lineage/sepolicy/exynos/sepolicy.mk
 BOARD_SEPOLICY_TEE_FLAVOR := mobicore
 include device/samsung_slsi/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += device/samsung/dreamlte/sepolicy/vendor
+BUILD_BROKEN_ENFORCE_SYSPROP_OWNER := true
 
 # Ril
 ENABLE_VENDOR_RIL_SERVICE := true
