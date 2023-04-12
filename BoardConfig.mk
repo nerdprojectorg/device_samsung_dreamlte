@@ -14,16 +14,19 @@
 # limitations under the License.
 #
 
-COMMON_PATH := device/samsung/universal8895-common
+DEVICE_PATH := device/samsung/dreamlte
 
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
+# Assert
+TARGET_OTA_ASSERT_DEVICE := dreamlte
+
 # Include path
-TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
+TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
 
 # Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_PATH)/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 
 # Display
 TARGET_SCREEN_DENSITY := 480
@@ -35,9 +38,12 @@ TARGET_SEC_FP_HAS_FINGERPRINT_GESTURES := true
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
+# Glove mode
+DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/configs/glove/glove_manifest.xml
+
 # Properties
-TARGET_SYSTEM_PROP += $(COMMON_PATH)/system.prop
-TARGET_VENDOR_PROP += $(COMMON_PATH)/system.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/system.prop
 
 # Platform
 TARGET_BOARD_PLATFORM := exynos5
@@ -82,6 +88,7 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
 TARGET_KERNEL_LLVM_BINUTILS := false
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_CONFIG := exynos8895-dreamlte_defconfig
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_CLANG_VERSION := clang-proton
 TARGET_KERNEL_CLANG_PATH := $(shell pwd)/prebuilts/clang/host/linux-x86/$(TARGET_KERNEL_CLANG_VERSION)
@@ -105,7 +112,7 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Manifest
 PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
-DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/configs/hidl/manifest.xml
 
 # Vendor separation
 TARGET_COPY_OUT_VENDOR := system/vendor
@@ -120,14 +127,14 @@ OVERRIDE_RS_DRIVER := libRSDriverArm.so
 TARGET_POWERHAL_VARIANT := samsung
 
 # Bluetooth
-BOARD_CUSTOM_BT_CONFIG := $(COMMON_PATH)/bluetooth/libbt_vndcfg.txt
+BOARD_CUSTOM_BT_CONFIG := $(DEVICE_PATH)/bluetooth/libbt_vndcfg.txt
 BOARD_HAVE_BLUETOOTH := true
 
 # Backlight
 BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 
 # Recovery
-TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/ramdisk/etc/fstab.samsungexynos8895
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/ramdisk/etc/fstab.samsungexynos8895
 
 # Wifi
 TARGET_USES_64_BIT_BCMDHD        := true
@@ -154,7 +161,7 @@ BOARD_HAVE_SAMSUNG_WIFI          := true
 include device/lineage/sepolicy/exynos/sepolicy.mk
 BOARD_SEPOLICY_TEE_FLAVOR := mobicore
 include device/samsung_slsi/sepolicy/sepolicy.mk
-BOARD_SEPOLICY_DIRS += device/samsung/universal8895-common/sepolicy/vendor
+BOARD_SEPOLICY_DIRS += device/samsung/dreamlte/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
 
 # Ril
@@ -172,3 +179,6 @@ TARGET_LD_SHIM_LIBS += \
     /system/vendor/lib/libexynosdisplay.so|/system/vendor/lib/libexynosdisplay_shim.so \
     /system/vendor/lib64/hw/hwcomposer.exynos5.so|/system/vendor/lib64/libexynosdisplay_shim.so \
     /system/vendor/lib/hw/hwcomposer.exynos5.so|/system/vendor/lib/libexynosdisplay_shim.so
+
+# Inherit from vendor dreamlte
+include vendor/samsung/dreamlte/BoardConfigVendor.mk

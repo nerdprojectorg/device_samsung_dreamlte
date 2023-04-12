@@ -8,7 +8,7 @@
 
 set -e
 
-DEVICE_COMMON=universal8895-common
+DEVICE=dreamlte
 VENDOR=samsung
 
 # Load extract_utils and do some sanity checks
@@ -55,12 +55,20 @@ fi
 
 
 # Initialize the helper
-setup_vendor "${DEVICE_COMMON}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}" true
+setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}" true
 
 extract "${MY_DIR}/proprietary-files.txt" "${SRC}" "${KANG}" --section "${SECTION}"
 
 # Fix proprietary blobs
-BLOB_ROOT="$ANDROID_ROOT"/vendor/"$VENDOR"/"$DEVICE_COMMON"/proprietary
+BLOB_ROOT="$ANDROID_ROOT"/vendor/"$VENDOR"/"$DEVICE"/proprietary
+
+function patch_firmware() {
+    hexdump -ve '1/1 "%.2X"' $1 | \
+    sed "s/40000054DEC0AD/02000014000000/g" | \
+    xxd -r -p > $1.patched
+
+    mv $1.patched $1
+}
 
 sed -i -z "s/    seclabel u:r:gpsd:s0\n//" $BLOB_ROOT/vendor/etc/init/init.gps.rc
 
@@ -113,6 +121,7 @@ sed -i 's/str_parms_get_str/str_parms_get_mod/g' $BLOB_ROOT/lib/hw/audio.primary
 "${PATCHELF}" --remove-needed libhidltransport.so $BLOB_ROOT/vendor/lib64/libsec-ril.so
 "${PATCHELF}" --remove-needed libhidltransport.so $BLOB_ROOT/vendor/lib/libsec-ril-dsds.so
 "${PATCHELF}" --remove-needed libhidltransport.so $BLOB_ROOT/vendor/lib/libsec-ril.so
+
 # Remove libhwbinder dependencie
 "${PATCHELF}" --remove-needed libhwbinder.so $BLOB_ROOT/lib/android.hardware.gnss@1.0.so
 "${PATCHELF}" --remove-needed libhwbinder.so $BLOB_ROOT/lib/android.hardware.gnss@1.1.so
@@ -129,6 +138,16 @@ sed -i 's/str_parms_get_str/str_parms_get_mod/g' $BLOB_ROOT/lib/hw/audio.primary
 "${PATCHELF}" --remove-needed libhwbinder.so $BLOB_ROOT/vendor/lib64/libsec-ril.so
 "${PATCHELF}" --remove-needed libhwbinder.so $BLOB_ROOT/vendor/lib/libsec-ril-dsds.so
 "${PATCHELF}" --remove-needed libhwbinder.so $BLOB_ROOT/vendor/lib/libsec-ril.so
+
+# remove RKP crap
+patch_firmware $BLOB_ROOT/vendor/firmware/fimc_is_lib.bin
+patch_firmware $BLOB_ROOT/vendor/firmware/fimc_is_rta_2l2_3h1.bin
+patch_firmware $BLOB_ROOT/vendor/firmware/fimc_is_rta_2l2_imx320.bin
+patch_firmware $BLOB_ROOT/vendor/firmware/fimc_is_rta_imx333_3h1.bin
+patch_firmware $BLOB_ROOT/vendor/firmware/fimc_is_rta_imx333_imx320.bin
+
+"${PATCHELF}" --add-needed libprocessgroup.so $BLOB_ROOT/lib/libhifills_interface.so
+"${PATCHELF}" --add-needed libprocessgroup.so $BLOB_ROOT/lib64/libhifills_interface.so
 
 # Protobuf
 "${PATCHELF}" --replace-needed libprotobuf-cpp-lite.so libprotobuf-cpp-lite-v29.so $BLOB_ROOT/vendor/lib/libwvhidl.so
