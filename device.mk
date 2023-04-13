@@ -248,7 +248,7 @@ PRODUCT_PACKAGES += \
     init.baseband.rc \
     init.recovery.samsungexynos8895.rc \
     init.samsung.rc \
-    init.vendor.ril.rc \
+    init.vendor.rilcommon.rc \
     init.samsungexynos8895.rc \
     init.samsungexynos8895.usb.rc \
     mobicore.rc \
