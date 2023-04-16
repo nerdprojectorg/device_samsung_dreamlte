@@ -14,9 +14,9 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_dreamlte.mk
+    $(LOCAL_DIR)/banana_dreamlte.mk
 
 COMMON_LUNCH_CHOICES := \
-    lineage_dreamlte-user \
-    lineage_dreamlte-userdebug \
-    lineage_dreamlte-eng
+    banana_dreamlte-user \
+    banana_dreamlte-userdebug \
+    banana_dreamlte-eng

@@ -23,16 +23,19 @@ $(call inherit-product, device/samsung/dreamlte/device.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit some common Lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+$(call inherit-product, vendor/banana/config/common.mk)
 
 # Other Stuff
-WITH_GMS := false
+BANANA_BUILD_TYPE := OFFICIAL
+BANANA_MAINTAINER := don_boruza
+WITH_GAPPS := true
+BUILD_CORE_GAPPS := true
 TARGET_ENABLE_BLUR := true
 TARGET_BOOT_ANIMATION_RES := 1080
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := dreamlte
-PRODUCT_NAME := lineage_dreamlte
+PRODUCT_NAME := banana_dreamlte
 PRODUCT_BRAND := samsung
 PRODUCT_MODEL := SM-G950F
 PRODUCT_MANUFACTURER := samsung
