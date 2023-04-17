@@ -160,7 +160,7 @@ WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 BOARD_HAVE_SAMSUNG_WIFI          := true
 
 # Sepolicy
-include device/lineage/sepolicy/exynos/sepolicy.mk
+include device/banana/sepolicy/exynos/sepolicy.mk
 BOARD_SEPOLICY_TEE_FLAVOR := mobicore
 include device/samsung_slsi/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += device/samsung/dreamlte/sepolicy/vendor
