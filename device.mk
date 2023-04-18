@@ -377,7 +377,3 @@ PRODUCT_COPY_FILES += \
 
 # call the proprietary setup
 $(call inherit-product, vendor/samsung/dreamlte/dreamlte-vendor.mk)
-
-# Lily Experience
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/lily_experience.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/lily_experience.xml
